@@ -1,7 +1,7 @@
 import os
 import cv2 as cv
 import numpy as np
-from GeneratorClass import VIgenerator
+from TessAgv.Utils.GeneratorClass import VIgenerator
 
 def LoadData(path, bands, size):
   tifAll, maskAll = loadFiles(path, bands)
