@@ -19,3 +19,11 @@ def loadFiles(cPath, bands):
     pathTIF = cPath + "/TIFF/Agaves{}.tif".format(iterator)
     pathMask = cPath + "/Mask/Mask{}.png".format(iterator)
   return tifList, maskList
+
+def allPatches(tifList, maskList, size):
+  X, y = createPatches(tifList[0], maskList[0], size)
+  for i in range(1, len(tifList)):
+    Xi, yi, = createPatches(tifList[i], maskList[i], size)
+    X = X + Xi
+    y = y + yi
+  return X, y
