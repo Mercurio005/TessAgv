@@ -49,7 +49,7 @@ class ModeML:
     while(current_sum / total < 0.99):
         current_sum += self.__pca.explained_variance_[k]
         k += 1
-    k=20
+    #k=20
     self.__pca = PCA(n_components=k, whiten=True)
     x_train_pca = self.__pca.fit_transform(newX_train)
     return x_train_pca, newy_train
