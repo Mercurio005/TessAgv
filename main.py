@@ -11,7 +11,7 @@ def DLMode(path, bandsNames, imageSize, epochs):
   model = DeepLearning.U_Net(X_train[0].shape, len(np.unique(y_train)), X_train)
   callbacks = [
                keras.callbacks.ModelCheckpoint("agaves_segmentation.h5", save_best_only=True)]
-  model.fit(X_train, y_train, epochs=epochs, validation_data=(X_test, y_test), callbacks=callbacks)
+  model.fit(X_train, y_train, epochs=epochs, validation_data=(X_valid, y_valid), callbacks=callbacks)
   return model
   
 def MLMode(path, bandsNames, imageSize, method):
