@@ -27,3 +27,25 @@ def allPatches(tifList, maskList, size):
     X = X + Xi
     y = y + yi
   return X, y
+
+def createPatches(tif, mask, size):
+  patchesTIF = list()
+  patchesMask = list()
+  newY = (mask.shape[0] // size[0])*size[0]
+  newX = (mask.shape[1] // size[1])*size[1]
+  diffY = mask.shape[0] - newY
+  diffX = mask.shape[1] - newX
+  initY = diffY//2
+  initX = diffX//2
+  newMask = mask[initY:initY+newY, initX:initX+newX]
+  newTif = tif[initY:initY+newY, initX:initX+newX]
+
+  for y in range(0, newTif.shape[0], size[0]):
+    for x in range(0, newTif.shape[1], size[1]):
+      windowTIF = newTif[y:y + size[0], x:x + size[1]]
+      windowMask = newMask[y:y + size[0], x:x + size[1]]
+      if windowTIF.shape[0] != size[0] or windowTIF.shape[1] != size[1]:
+        continue
+      patchesTIF.append(windowTIF)
+      patchesMask.append(np.expand_dims(windowMask, 2))
+  return patchesTIF, patchesMask
