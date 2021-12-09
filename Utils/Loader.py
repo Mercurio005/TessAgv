@@ -3,6 +3,11 @@ import cv2 as cv
 import numpy as np
 from GeneratorClass import VIgenerator
 
+def LoadData(path, bands, size):
+  tifAll, maskAll = loadFiles(path, bands)
+  X, y = allPatches(tifAll, maskAll, size)
+  return X, y
+
 def loadFiles(cPath, bands):
   iterator = 1
   maskList = list()
