@@ -54,3 +54,13 @@ def createPatches(tif, mask, size):
       patchesTIF.append(windowTIF)
       patchesMask.append(np.expand_dims(windowMask, 2))
   return patchesTIF, patchesMask
+
+def getBands(tif, bands):
+  imageList = list()
+  for band in bands:
+    dataBand = tif.getBand(band)
+    if np.isnan(dataBand).any():
+      dataBand = np.nan_to_num(dataBand, None)
+    imageList.append(dataBand)
+  imageAll = cv.merge(imageList)
+  return imageAll
