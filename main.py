@@ -2,6 +2,7 @@ from TessAgv.Utils.Loader import LoadData
 from TessAgv.Models import ML, DeepLearning
 from sklearn.model_selection import train_test_split
 from sklearn.decomposition import PCA
+import numpy as np
 
 def DLMode(path, bandsNames, imageSize, epochs):
   X, y = LoadData(path, bandsNames, imageSize)
