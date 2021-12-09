@@ -14,7 +14,8 @@ def DLMode(path, bandsNames, imageSize, epochs):
   
 def MLMode(path, bandsNames, imageSize, method):
   X, y = LoadData(path, bandsNames, imageSize)
-  Xnew, ynew = transformData(X, y)
+  X_train, X_valid, y_train, y_valid = train_test_split(np.array(X), np.array(y), test_size = 0.3)
+  Xnew, ynew = transformData(X_train, y_train)
   model = ML.MLModel(method)
   model.fit(Xnew, ynew)
   return model
