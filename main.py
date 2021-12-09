@@ -10,6 +10,7 @@ def DLMode(path, bandsNames, imageSize, epochs):
   callbacks = [
                keras.callbacks.ModelCheckpoint("agaves_segmentation.h5", save_best_only=True)]
   model.fit(X_train, y_train, epochs=epochs, validation_data=(X_test, y_test), callbacks=callbacks)
+  return model
   
 def MLMode(path, bandsNames, imageSize, method):
   X, y = LoadData(path, bandsNames, imageSize)
