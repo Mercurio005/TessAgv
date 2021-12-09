@@ -19,7 +19,7 @@ class ModeDL:
     X, y = LoadData(self.__path, self.__bands, self.__size)
     X_train, X_valid, y_train, y_valid = train_test_split(np.array(X), np.array(y), test_size = 0.3)
     self.__model = DeepLearning.U_Net(X_train[0].shape, len(np.unique(y_train)), X_train)
-    self.__model.fit(X_train, y_train, epochs=epochs, validation_data=(X_valid, y_valid), callbacks=callbacks)
+    self.__model.fit(X_train, y_train, epochs=self.__epochs, validation_data=(X_valid, y_valid), callbacks=callbacks)
     
 class ModeML:
   def __init__(self, path, bandsNames, imageSize, method):
