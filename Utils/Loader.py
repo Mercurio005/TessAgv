@@ -8,6 +8,12 @@ def LoadData(path, bands, size):
   X, y = allPatches(tifAll, maskAll, size)
   return X, y
 
+def LoadFile(path, bands, size):
+  TIFF = VIgenerator(path)
+  imageAll = getBands(TIFF, bands)
+  X, tilesNum = patchesPredict(imageAll, size)
+  return X, tilesNum
+
 def loadFiles(cPath, bands):
   iterator = 1
   maskList = list()
@@ -64,3 +70,21 @@ def getBands(tif, bands):
     imageList.append(dataBand)
   imageAll = cv.merge(imageList)
   return imageAll
+
+def patchesPredict(image, size):
+  patchesTIF = list()
+  newY = (image.shape[0] // size[0])*size[0]
+  newX = (image.shape[1] // size[1])*size[1]
+  diffY = image.shape[0] - newY
+  diffX = image.shape[1] - newX
+  initY = diffY//2
+  initX = diffX//2
+  newImage = image[initY:initY+newY, initX:initX+newX]
+
+  for y in range(0, newImage.shape[0], size[0]):
+    for x in range(0, newImage.shape[1], size[1]):
+      windowTIF = newImage[y:y + size[0], x:x + size[1]]
+      if windowTIF.shape[0] != size[0] or windowTIF.shape[1] != size[1]:
+        continue
+      patchesTIF.append(windowTIF)
+  return np.array(patchesTIF), (int(newImage.shape[0]/size[0]), int(newImage.shape[1]/size[1]))
