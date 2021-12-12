@@ -58,5 +58,4 @@ def U_Net(img_shape, num_classes, notUsed):
 
     # Define the model
     model = keras.Model(inputs, outputs)
-    model.compile(optimizer="rmsprop", loss="sparse_categorical_crossentropy")  #  keras.optimizers.Adam(learning_rate=1e-4)
     return model
