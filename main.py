@@ -7,11 +7,12 @@ import numpy as np
 import cv2 as cv
 
 class ModeDL:
-  def __init__(self, path, bandsNames, imageSize, epochs):
+  def __init__(self, path, bandsNames, imageSize, epochs, methodSTR):
     self.__path = path
     self.__bands = bandsNames
     self.__size = imageSize
     self.__epochs = epochs
+    self.__modelSTR = methodSTR
     self.__model = None
     self.__tiles = None
     self.__callbacks = callbacks = [
@@ -20,7 +21,10 @@ class ModeDL:
   def train(self):
     X, y = LoadData(self.__path, self.__bands, self.__size)
     X_train, X_valid, y_train, y_valid = train_test_split(np.array(X), np.array(y), test_size = 0.3)
-    self.__model = DeepLearning.U_Net(X_train[0].shape, len(np.unique(y_train)), X_train)
+    #self.__model = DeepLearning.U_Net(X_train[0].shape, len(np.unique(y_train)), X_train)
+    classes = len(np.unique(y_train))
+    shape = X_train[0].shape
+    self.loadModel(classes, shape)
     self.__model.fit(X_train, y_train, epochs=self.__epochs, validation_data=(X_valid, y_valid), callbacks=self.__callbacks)
     
   def predict(self, path):
@@ -28,6 +32,15 @@ class ModeDL:
     predicted = self.__model.predict(X)
     listY = concatTiles(predicted, self.__tiles)
     return listY
+  
+  def __loadModel(self, n_classes, shape):
+    if self.__modelSTR == "U-Net":
+      self.__model = DeepLearning.U_Net(shape, n_classes, None)
+    elif self.__modelSTR == "FCN8":
+      x = fcn8( n_classes , shape )
+      self.__model = x.get_model()
+    else:
+      print("Model not implemented")
     
 class ModeML:
   def __init__(self, path, bandsNames, imageSize, method):
