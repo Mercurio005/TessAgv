@@ -4,6 +4,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.decomposition import PCA
 from tensorflow import keras
 import numpy as np
+from fcn import *
 import cv2 as cv
 
 class ModeDL:
