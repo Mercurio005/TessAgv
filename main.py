@@ -25,7 +25,7 @@ class ModeDL:
     #self.__model = DeepLearning.U_Net(X_train[0].shape, len(np.unique(y_train)), X_train)
     classes = len(np.unique(y_train))
     shape = X_train[0].shape
-    self.loadModel(classes, shape)
+    self.__loadModel(classes, shape)
     self.__model.fit(X_train, y_train, epochs=self.__epochs, validation_data=(X_valid, y_valid), callbacks=self.__callbacks)
     
   def predict(self, path):
