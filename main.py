@@ -42,6 +42,8 @@ class ModeDL:
       self.__model = x.get_model()
     else:
       print("Model not implemented")
+      return 0
+    self.__model.compile(optimizer="rmsprop", loss="sparse_categorical_crossentropy")  #  keras.optimizers.Adam(learning_rate=1e-4)
     
 class ModeML:
   def __init__(self, path, bandsNames, imageSize, method):
