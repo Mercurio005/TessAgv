@@ -49,6 +49,6 @@ class VIgenerator:
     elif bandName in self.__switcher:
       return self.__switcher.get(bandName)
     elif bandName == "RGB":
-      return cv.merge([self.__singleBand("Blue")*self.__wavelength[2],
-                       self.__singleBand("Green")*self.__wavelength[1], 
-                       self.__singleBand("Red")*self.__wavelength[0]])
+      return cv.merge([self.__singleBand("Blue")*self.__wavelength[2] * self.mask,
+                       self.__singleBand("Green")*self.__wavelength[1] * self.mask, 
+                       self.__singleBand("Red")*self.__wavelength[0]] * self.mask)
