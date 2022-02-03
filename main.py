@@ -42,7 +42,7 @@ class ModeDL:
     print("Model not trained")
   
   def plot_history(self):
-    if self.__history Not None:
+    if self.__history is not None:
       show_history(self.__history)
     else:
       print("Model not trained")
@@ -86,7 +86,7 @@ class ModeML:
     print("Model not trained")
   
   def plot_history(self):
-    if self.__history Not None:
+    if self.__history is not None:
       show_history(self.__history)
     else:
       print("Model not trained")
