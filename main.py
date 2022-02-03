@@ -34,7 +34,7 @@ class ModeDL:
                                       callbacks=self.__callbacks)
     
   def predict(self, path):
-    if self.__history Not None:
+    if self.__history is not None:
       X, self.__tiles = LoadFile(path, self.__bands, self.__size)
       predicted = self.__model.predict(X)
       listY = concatTiles(predicted, self.__tiles)
@@ -75,7 +75,7 @@ class ModeML:
     self.__history = self.__model.fit(Xnew, ynew)
     
   def predict(self, path):
-    if self.__history Not None:
+    if self.__history is not None:
       X, self.__tiles = LoadFile(path, self.__bands, self.__size)
       newX = X.reshape(X.shape[0], -1)
       newX_pca = self.__pca.transform(newX)
