@@ -20,7 +20,7 @@ class ModeDL:
     self.__history = None
     self.__callbacks = callbacks = [
                keras.callbacks.ModelCheckpoint("agaves_segmentation.h5", save_best_only=True),
-               keras.callbacks.EarlyStopping(monitor='val_accuracy', patience=5)
+               #keras.callbacks.EarlyStopping(monitor='val_accuracy', patience=5)
                ]
     
   def train(self):
