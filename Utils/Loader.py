@@ -21,6 +21,7 @@ def loadFiles(cPath, bands):
   pathTIF = cPath + "/TIFF/Agaves{}.tif".format(iterator)
   pathMask = cPath + "/Mask/Mask{}.png".format(iterator)
   while os.path.exists(pathTIF):
+    print("Loading file:", pathTIF)
     mask = cv.imread(pathMask, cv.IMREAD_GRAYSCALE)
     maskList.append(mask)
     tifRaw = VIgenerator(pathTIF)
