@@ -6,7 +6,7 @@ from TessAgv.Utils.GeneratorClass import VIgenerator
 def LoadData(path, bands, size):
   tifAll, maskAll = loadFiles(path, bands)
   X, y = allPatches(tifAll, maskAll, size)
-  return X, y
+  return np.asarray(X), np.asarray(y)
 
 def LoadFile(path, bands, size):
   TIFF = VIgenerator(path)
@@ -40,9 +40,14 @@ def allPatches(tifList, maskList, size):
     y = y + yi
   return X, y
 
-def createPatches(tif, mask, size):
+def createPatches(tif, mask, size, resize):
+  #iter = 0
   patchesTIF = list()
+  #xnum = (mask.shape[1] // size[1])
+  #ynum = (mask.shape[0] // size[0])
+  #patchesTIF = np.zeros( (xnum*ynum, tif.shape[0], tif.shape[1], tif.shape[2]) )
   patchesMask = list()
+  #patchesMask = np.zeros( (xnum*ynum, tif.shape[0], tif.shape[1], 1) )
   newY = (mask.shape[0] // size[0])*size[0]
   newX = (mask.shape[1] // size[1])*size[1]
   diffY = mask.shape[0] - newY
@@ -59,8 +64,9 @@ def createPatches(tif, mask, size):
       if windowTIF.shape[0] != size[0] or windowTIF.shape[1] != size[1]:
         continue
       if np.amax(windowTIF) >= -1:  #Save patches with data, no background
-        patchesTIF.append(windowTIF)
-        patchesMask.append(np.expand_dims(windowMask, 2))
+        patchesTIF.append( cv.resize(windowTIF, resize) )
+        maskRez = cv.resize(windowMask, resize)
+        patchesMask.append(np.expand_dims(maskRez, 2))
   return patchesTIF, patchesMask
 
 def getBands(tif, bands):
