@@ -58,7 +58,7 @@ def createPatches(tif, mask, size):
       windowMask = newMask[y:y + size[0], x:x + size[1]]
       if windowTIF.shape[0] != size[0] or windowTIF.shape[1] != size[1]:
         continue
-      if max(windowTIF)>=-1:  #Save patches with data, no background
+      if np.max(windowTIF).any()>=-1:  #Save patches with data, no background
         patchesTIF.append(windowTIF)
         patchesMask.append(np.expand_dims(windowMask, 2))
   return patchesTIF, patchesMask
