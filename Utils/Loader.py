@@ -3,9 +3,9 @@ import cv2 as cv
 import numpy as np
 from TessAgv.Utils.GeneratorClass import VIgenerator
 
-def LoadData(path, bands, size):
+def LoadData(path, bands, size, resize):
   tifAll, maskAll = loadFiles(path, bands)
-  X, y = allPatches(tifAll, maskAll, size)
+  X, y = allPatches(tifAll, maskAll, size, resize)
   return np.asarray(X), np.asarray(y)
 
 def LoadFile(path, bands, size):
@@ -32,10 +32,10 @@ def loadFiles(cPath, bands):
     pathMask = cPath + "/Labels/label{}.png".format(iterator)
   return tifList, maskList
 
-def allPatches(tifList, maskList, size):
-  X, y = createPatches(tifList[0], maskList[0], size)
+def allPatches(tifList, maskList, size, resize):
+  X, y = createPatches(tifList[0], maskList[0], size, resize)
   for i in range(1, len(tifList)):
-    Xi, yi, = createPatches(tifList[i], maskList[i], size)
+    Xi, yi, = createPatches(tifList[i], maskList[i], size, resize)
     X = X + Xi
     y = y + yi
   return X, y
