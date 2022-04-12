@@ -18,8 +18,8 @@ def loadFiles(cPath, bands):
   iterator = 1
   maskList = list()
   tifList = list()
-  pathTIF = cPath + "/TIFF/Agaves{}.tif".format(iterator)
-  pathMask = cPath + "/Mask/Mask{}.png".format(iterator)
+  pathTIF = cPath + "/Data/Zone{}.tif".format(iterator)
+  pathMask = cPath + "/Labels/label{}.png".format(iterator)
   while os.path.exists(pathTIF):
     print("Loading file:", pathTIF)
     mask = cv.imread(pathMask, cv.IMREAD_GRAYSCALE)
@@ -28,8 +28,8 @@ def loadFiles(cPath, bands):
     tif = getBands(tifRaw, bands)
     tifList.append(tif)
     iterator += 1
-    pathTIF = cPath + "/TIFF/Agaves{}.tif".format(iterator)
-    pathMask = cPath + "/Mask/Mask{}.png".format(iterator)
+    pathTIF = cPath + "/Data/Zone{}.tif".format(iterator)
+    pathMask = cPath + "/Labels/label{}.png".format(iterator)
   return tifList, maskList
 
 def allPatches(tifList, maskList, size):
