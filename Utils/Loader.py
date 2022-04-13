@@ -76,6 +76,7 @@ def createPatches(tif, mask, size, resize):
 def getBands(tif, bands):
   imageList = list()
   for band in bands:
+    print(Generating Band:, band)
     dataBand = tif.getBand(band)
     if np.isnan(dataBand).any():
       dataBand = np.nan_to_num(dataBand, None)
