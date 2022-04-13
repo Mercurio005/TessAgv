@@ -7,7 +7,9 @@ import PIL.Image
 Image.MAX_IMAGE_PIXELS = None
 
 def LoadData(path, bands, size, resize):
+  print("Loading Data...")
   tifAll, maskAll = loadFiles(path, bands)
+  print("Creating Patches...")
   X, y = allPatches(tifAll, maskAll, size, resize)
   return np.asarray(X), np.asarray(y)
 
@@ -67,8 +69,8 @@ def createPatches(tif, mask, size, resize):
       windowMask = newMask[y:y + size[0], x:x + size[1]]
       if windowTIF.shape[0] != size[0] or windowTIF.shape[1] != size[1]:
         continue
-      if np.amax(windowTIF) >= -1:  #Save patches with data, no background
-        patchesTIF.append( cv.resize(windowTIF, resize) )
+      if np.nanmax(windowTIF) >= -1:  #Save patches with data, no background
+        patchesTIF.append( np.nan_to_num(cv.resize(windowTIF, resize), None) )
         maskRez = cv.resize(windowMask, resize)
         patchesMask.append(np.expand_dims(maskRez, 2))
   return patchesTIF, patchesMask
@@ -76,10 +78,10 @@ def createPatches(tif, mask, size, resize):
 def getBands(tif, bands):
   imageList = list()
   for band in bands:
-    print(Generating Band:, band)
+    print("Generating Band:", band)
     dataBand = tif.getBand(band)
-    if np.isnan(dataBand).any():
-      dataBand = np.nan_to_num(dataBand, None)
+    #if np.isnan(dataBand).any():
+    #  dataBand = np.nan_to_num(dataBand, None)
     imageList.append(dataBand)
   imageAll = cv.merge(imageList)
   return imageAll
