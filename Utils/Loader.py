@@ -3,6 +3,7 @@ import cv2 as cv
 import numpy as np
 from TessAgv.Utils.GeneratorClass import VIgenerator
 from PIL import Image
+import PIL.Image
 Image.MAX_IMAGE_PIXELS = None
 
 def LoadData(path, bands, size, resize):
