@@ -18,7 +18,7 @@ class VIgenerator:
   @property
   def mask(self):
     tempMask = self.__TIF.read(self.__Bands.index("Alpha")+1)
-    tempMask[tempMask==0] = np.nan
+    tempMask[tempMask==-10000] = np.nan
     tempMask[tempMask==255] = 1
     return tempMask
 
