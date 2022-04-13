@@ -2,6 +2,8 @@ import os
 import cv2 as cv
 import numpy as np
 from TessAgv.Utils.GeneratorClass import VIgenerator
+from PIL import Image
+Image.MAX_IMAGE_PIXELS = None
 
 def LoadData(path, bands, size, resize):
   tifAll, maskAll = loadFiles(path, bands)
@@ -22,7 +24,8 @@ def loadFiles(cPath, bands):
   pathMask = cPath + "/Labels/label{}.png".format(iterator)
   while os.path.exists(pathTIF):
     print("Loading file:", pathTIF)
-    mask = cv.imread(pathMask, cv.IMREAD_GRAYSCALE)
+    #mask = cv.imread(pathMask, cv.IMREAD_GRAYSCALE)
+    mask = np.asarray(PIL.Image.open(pathMask))
     maskList.append(mask)
     tifRaw = VIgenerator(pathTIF)
     tif = getBands(tifRaw, bands)
