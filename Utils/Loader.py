@@ -6,11 +6,11 @@ from PIL import Image
 import PIL.Image
 Image.MAX_IMAGE_PIXELS = None
 
-def LoadData(path, bands, size, resize):
+def LoadData(path, bands, size):
   print("Loading Data...")
   tifAll, maskAll = loadFiles(path, bands)
   print("Creating Patches...")
-  X, y = allPatches(tifAll, maskAll, size, resize)
+  X, y = allPatches(tifAll, maskAll, size)
   return np.asarray(X), np.asarray(y)
 
 def LoadFile(path, bands, size):
@@ -38,15 +38,15 @@ def loadFiles(cPath, bands):
     pathMask = cPath + "/Labels/label{}.png".format(iterator)
   return tifList, maskList
 
-def allPatches(tifList, maskList, size, resize):
-  X, y = createPatches(tifList[0], maskList[0], size, resize)
+def allPatches(tifList, maskList, size):
+  X, y = createPatches(tifList[0], maskList[0], size)
   for i in range(1, len(tifList)):
-    Xi, yi, = createPatches(tifList[i], maskList[i], size, resize)
+    Xi, yi, = createPatches(tifList[i], maskList[i], size)
     X = X + Xi
     y = y + yi
   return X, y
 
-def createPatches(tif, mask, size, resize):
+def createPatches(tif, mask, size):
   #iter = 0
   patchesTIF = list()
   #xnum = (mask.shape[1] // size[1])
@@ -70,9 +70,11 @@ def createPatches(tif, mask, size, resize):
       if windowTIF.shape[0] != size[0] or windowTIF.shape[1] != size[1]:
         continue
       if np.nanmax(windowTIF) >= -1:  #Save patches with data, no background
-        patchesTIF.append( np.nan_to_num(cv.resize(windowTIF, resize), None) )
-        maskRez = cv.resize(windowMask, resize)
-        patchesMask.append(np.expand_dims(maskRez, 2))
+        patchesTIF.append( np.nan_to_num(windowTIF, None) )
+        #patchesTIF.append( np.nan_to_num(cv.resize(windowTIF, resize), None) )
+        #maskRez = cv.resize(windowMask, resize)
+        #patchesMask.append(np.expand_dims(maskRez, 2))
+        patchesMask.append( np.expand_dims(windowMask, 2) )
   return patchesTIF, patchesMask
 
 def getBands(tif, bands):
