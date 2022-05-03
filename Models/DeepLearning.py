@@ -3,7 +3,7 @@ from tensorflow import keras
 
 
 ## U-Net Model ##
-def U_Net(img_shape, num_classes, notUsed):
+def U_Net(img_shape, num_classes, notUsed=None):
     inputs = keras.Input(shape=img_shape)
 
     ### [First half of the network: downsampling inputs] ###
