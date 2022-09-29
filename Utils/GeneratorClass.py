@@ -14,6 +14,12 @@ class VIgenerator:
                        "NDRE": self.__NDRE, 
                        "MSAVI": self.__MSAVI,
                        "NDWI": self.__NDWI}
+  @property
+  def bands(self):
+    return self.__Bands
+  @property
+  def Vis(self):
+    return self.__switcher.keys()
 
   @property
   def mask(self):
